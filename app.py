@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import anthropic
+from google import genai
 import os
 from dotenv import load_dotenv
 
@@ -9,9 +9,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-client = anthropic.Anthropic(
-    api_key=os.getenv("ANTHROPIC_API_KEY")
-)
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -23,18 +21,15 @@ def chat():
     user_message = data["message"]
 
     try:
-        response = client.messages.create(
-            model="claude-3-sonnet-20240229",
-            max_tokens=300,
-            messages=[
-                {
-                    "role": "user",
-                    "content": user_message
-                }
-            ]
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=user_message,
+            config={
+                "max_output_tokens": 300
+            }
         )
 
-        reply = response.content[0].text
+        reply = response.text
 
         return jsonify({
             "reply": reply
@@ -46,7 +41,7 @@ def chat():
 
 @app.route("/")
 def home():
-    return "Claude Chatbot Backend Running 🚀"
+    return "Gemini Chatbot Backend Running 🚀"
 
 
 if __name__ == "__main__":
