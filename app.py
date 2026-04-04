@@ -11,6 +11,12 @@ CORS(app)
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
+def load_prompt():
+    with open("prompt.txt", "r", encoding="utf-8") as file:
+        return file.read()
+
+System_prompt = load_prompt()
+
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
@@ -23,8 +29,14 @@ def chat():
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
-            contents=user_message,
+               contents=[
+                {
+                    "role": "user",
+                    "parts": [{"text": user_message}]
+                }
+            ],
             config={
+                "system_instruction": System_prompt,
                 "max_output_tokens": 300
             }
         )
