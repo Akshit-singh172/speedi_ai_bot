@@ -1,47 +1,32 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from google import genai
-import os
 from dotenv import load_dotenv
+from agent import run_agent
 
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-
 def load_prompt():
     with open("prompt.txt", "r", encoding="utf-8") as file:
         return file.read()
 
-System_prompt = load_prompt()
+SYSTEM_PROMPT = load_prompt()
+
 
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
 
-    if not data or "message" not in data:
-        return jsonify({"error": "Message is required"}), 400
+    if not data or "message" not in data or "user_id" not in data:
+        return jsonify({"error": "message and user_id are required"}), 400
 
     user_message = data["message"]
+    user_id = data["user_id"]
 
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-               contents=[
-                {
-                    "role": "user",
-                    "parts": [{"text": user_message}]
-                }
-            ],
-            config={
-                "system_instruction": System_prompt,
-                "max_output_tokens": 300
-            }
-        )
-
-        reply = response.text
+        reply = run_agent(user_message, user_id)
 
         return jsonify({
             "reply": reply
@@ -49,7 +34,6 @@ def chat():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/")
 def home():
