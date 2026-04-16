@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Speedi AI Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">S</div>
+          <div class="titles">
+            <div class="title">Speedi AI Bot</div>
+            <div class="subtitle">
+              <span id="statusDot" class="dot" aria-hidden="true"></span>
+              <span id="statusText">Checking server…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <label class="field">
+            <span class="label">User ID</span>
+            <input id="userIdInput" class="input" type="text" autocomplete="off" spellcheck="false" />
+          </label>
+          <button id="resetBtn" class="btn btn-secondary" type="button">Reset</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <div id="messages" class="messages" aria-live="polite" aria-label="Chat messages"></div>
+
+        <form id="composer" class="composer" autocomplete="off">
+          <textarea
+            id="messageInput"
+            class="textarea"
+            placeholder="Type a message…"
+            rows="1"
+            aria-label="Message"
+          ></textarea>
+          <button id="sendBtn" class="btn btn-primary" type="submit">Send</button>
+        </form>
+
+        <div class="hint">
+          API: <code>POST /api/chat</code> · Reset: <code>POST /api/reset</code> · Try: “generate an image of a neon city at night”
+        </div>
+      </main>
+    </div>
+
+    <script>
+      window.__SPEEDI__ = { apiChatUrl: "/api/chat", apiHealthUrl: "/api/health" };
+    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

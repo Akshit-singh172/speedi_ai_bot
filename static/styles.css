@@ -1,0 +1,318 @@
+:root {
+  color-scheme: light;
+  --bg: #0b1020;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel-2: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.72);
+  --brand: #7c5cff;
+  --brand-2: #25c2a0;
+  --danger: #ff4d6d;
+  --shadow: 0 20px 70px rgba(0, 0, 0, 0.45);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+    "Segoe UI Emoji";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--sans);
+  background:
+    radial-gradient(900px 500px at 10% 10%, rgba(124, 92, 255, 0.28), transparent 55%),
+    radial-gradient(900px 500px at 90% 10%, rgba(37, 194, 160, 0.18), transparent 55%),
+    radial-gradient(900px 500px at 50% 110%, rgba(255, 77, 109, 0.12), transparent 55%),
+    var(--bg);
+  color: var(--text);
+}
+
+code,
+pre {
+  font-family: var(--mono);
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 22px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 260px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--brand), #a08bff);
+  color: #fff;
+}
+
+.titles .title {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.titles .subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.dot.ok {
+  background: rgba(37, 194, 160, 0.85);
+  border-color: rgba(37, 194, 160, 0.95);
+}
+
+.dot.bad {
+  background: rgba(255, 77, 109, 0.85);
+  border-color: rgba(255, 77, 109, 0.95);
+}
+
+.controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.input {
+  width: 280px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--text);
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(124, 92, 255, 0.65);
+  box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.18);
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: transform 0.06s ease, background 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  border-color: rgba(124, 92, 255, 0.55);
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.7), rgba(124, 92, 255, 0.4));
+}
+
+.btn-secondary {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.main {
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+}
+
+.messages {
+  height: calc(100vh - 260px);
+  min-height: 360px;
+  max-height: 720px;
+  overflow: auto;
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+}
+
+.row.user {
+  justify-content: flex-end;
+}
+
+.row.assistant {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 820px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: rgba(0, 0, 0, 0.22);
+  white-space: pre-wrap;
+}
+
+.row.user .bubble {
+  background: linear-gradient(135deg, rgba(37, 194, 160, 0.22), rgba(37, 194, 160, 0.1));
+  border-color: rgba(37, 194, 160, 0.28);
+}
+
+.text {
+  line-height: 1.4;
+}
+
+.code {
+  margin: 10px 0 0 0;
+  padding: 10px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  overflow: auto;
+}
+
+.image-wrap {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.image {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.image-link {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.image-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.textarea {
+  resize: none;
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--text);
+  outline: none;
+  line-height: 1.35;
+}
+
+.textarea:focus {
+  border-color: rgba(124, 92, 255, 0.65);
+  box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.18);
+}
+
+.hint {
+  padding: 10px 14px 14px 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.hint code {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.18);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+@media (max-width: 880px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls {
+    justify-content: space-between;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .messages {
+    height: calc(100vh - 330px);
+  }
+}
