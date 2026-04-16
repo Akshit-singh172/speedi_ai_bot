@@ -6,22 +6,15 @@ This repo runs a Flask server that exposes a chat API **and** serves a local web
 
 1) Create a `.env` file (copy from `.env.example`) and set:
 - `GEMINI_API_KEY` (required)
-- Image generation is done via **ImageGen MCP Server** (Gemini/Nano Banana) (see `.env.example`):
-  - Configure how to run the MCP server (`IMAGEGEN_MCP_COMMAND`, `IMAGEGEN_MCP_ARGS`, optional `IMAGEGEN_MCP_CWD`)
-  - Image model used: `gemini-2.5-flash-image`
-  - If the MCP server can’t be started, the app falls back to direct Gemini image generation (no Node needed)
+- Image generation uses **Pollinations** (free, no key). Optional tuning in `.env.example`.
 
 2) Install deps (Windows):
 - Run `setup.bat`
 
-3) (For images) Install ImageGen MCP server (Node.js + npm required):
-- `npm install -g imagegen-mcp-server`
-  - Then set `IMAGEGEN_MCP_COMMAND=imagegen-mcp-server` in `.env`
-
-4) Start the server:
+3) Start the server:
 - `python main.py`
 
-5) Open the UI:
+4) Open the UI:
 - `http://localhost:5000/`
 
 ## API (for other projects)

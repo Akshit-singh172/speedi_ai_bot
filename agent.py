@@ -21,7 +21,7 @@ generate_image_tool = types.Tool(
     function_declarations=[
         types.FunctionDeclaration(
             name="generate_image",
-            description="Generate an image from a text prompt (Gemini 2.5 Flash Image / Nano Banana via ImageGen MCP server).",
+            description="Generate an image from a text prompt and return a URL that can be displayed in the UI.",
             parameters=types.Schema(
                 type="OBJECT",
                 properties={

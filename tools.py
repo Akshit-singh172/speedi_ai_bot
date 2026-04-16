@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from imagegen import generate_image
+from pollinations_image import generate_image
 
 
 def handle_tool_call(tool_name: str, args: dict | None) -> dict:
