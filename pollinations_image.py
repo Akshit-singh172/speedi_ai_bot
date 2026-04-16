@@ -14,6 +14,7 @@ GENERATED_DIR = STATIC_DIR / "generated"
 
 POLLINATIONS_BASE_URL = "https://gen.pollinations.ai/image"
 POLLINATIONS_MODEL = os.getenv("POLLINATIONS_IMAGE_MODEL", "flux").strip() or "flux"
+POLLINATIONS_API_KEY = os.getenv("POLLINATIONS_API_KEY", "").strip()
 POLLINATIONS_TIMEOUT_S = float(os.getenv("POLLINATIONS_TIMEOUT_S", "60"))
 
 
@@ -42,9 +43,17 @@ def generate_image(prompt: str, *, filename_hint: str | None = None) -> dict:
         "height": 1024,
         "safe": "true",
     }
+    if POLLINATIONS_API_KEY:
+        params["key"] = POLLINATIONS_API_KEY
 
-    response = requests.get(url, params=params, timeout=POLLINATIONS_TIMEOUT_S)
+    headers = {"User-Agent": "speedi-ai-bot/1.0", "Accept": "image/*"}
+    response = requests.get(url, params=params, headers=headers, timeout=POLLINATIONS_TIMEOUT_S)
     if not response.ok:
+        if response.status_code == 401:
+            raise Exception(
+                "Pollinations returned 401 Unauthorized. Set POLLINATIONS_API_KEY in .env "
+                "(get a key from enter.pollinations.ai) or try a different network/IP."
+            )
         raise Exception(f"Pollinations image request failed (HTTP {response.status_code})")
 
     content_type = response.headers.get("Content-Type")

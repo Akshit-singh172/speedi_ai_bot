@@ -7,6 +7,7 @@ This repo runs a Flask server that exposes a chat API **and** serves a local web
 1) Create a `.env` file (copy from `.env.example`) and set:
 - `GEMINI_API_KEY` (required)
 - Image generation uses **Pollinations** (free, no key). Optional tuning in `.env.example`.
+  - If you get HTTP 401 on some networks, set `POLLINATIONS_API_KEY` (see `.env.example`).
 
 2) Install deps (Windows):
 - Run `setup.bat`
